@@ -1,3 +1,7 @@
+from pathlib import Path
+from typing import Any, Union
+
+
 class WebDavException(Exception):
     pass
 
@@ -7,14 +11,13 @@ class NotValid(WebDavException):
 
 
 class OptionNotValid(NotValid):
-    def __init__(self, name, value, ns=""):
+    def __init__(self, name: str, value: Any, ns=""):
         self.name = name
         self.value = value
         self.ns = ns
 
     def __str__(self):
-        return "Option ({ns}{name}={value}) have invalid name or value".format(ns=self.ns, name=self.name,
-                                                                               value=self.value)
+        return f"Option ({self.ns}{self.name}={self.value}) have invalid name or value"
 
 
 class CertificateNotValid(NotValid):
@@ -26,40 +29,40 @@ class NotFound(WebDavException):
 
 
 class LocalResourceNotFound(NotFound):
-    def __init__(self, path):
+    def __init__(self, path: Union[str, Path]):
         self.path = path
 
     def __str__(self):
-        return "Local file: {path} not found".format(path=self.path)
+        return f"Local file: {self.path} not found"
 
 
 class RemoteResourceNotFound(NotFound):
-    def __init__(self, path):
+    def __init__(self, path: Union[str, Path]):
         self.path = path
 
     def __str__(self):
-        return "Remote resource: {path} not found".format(path=self.path)
+        return f"Remote resource: {self.path} not found"
 
 
 class RemoteParentNotFound(NotFound):
-    def __init__(self, path):
+    def __init__(self, path: Union[str, Path]):
         self.path = path
 
     def __str__(self):
-        return "Remote parent for: {path} not found".format(path=self.path)
+        return f"Remote parent for: {self.path} not found"
 
 
 class MethodNotSupported(WebDavException):
-    def __init__(self, name, server):
+    def __init__(self, name: str, server: str):
         self.name = name
         self.server = server
 
     def __str__(self):
-        return "Method '{name}' not supported for {server}".format(name=self.name, server=self.server)
+        return f"Method '{self.name}' not supported for {self.server}"
 
 
 class ConnectionException(WebDavException):
-    def __init__(self, exception):
+    def __init__(self, exception: Exception):
         self.exception = exception
 
     def __str__(self):
@@ -67,31 +70,30 @@ class ConnectionException(WebDavException):
 
 
 class NoConnection(WebDavException):
-    def __init__(self, hostname):
+    def __init__(self, hostname: str):
         self.hostname = hostname
 
     def __str__(self):
-        return "No connection with {hostname}".format(hostname=self.hostname)
+        return f"No connection with {self.hostname}"
 
 
 # This exception left only for supporting original library interface.
 class NotConnection(WebDavException):
-    def __init__(self, hostname):
+    def __init__(self, hostname: str):
         self.hostname = hostname
 
     def __str__(self):
-        return "No connection with {hostname}".format(hostname=self.hostname)
+        return f"No connection with {self.hostname}"
 
 
 class ResponseErrorCode(WebDavException):
-    def __init__(self, url, code, message):
+    def __init__(self, url: str, code: int, message: str):
         self.url = url
         self.code = code
         self.message = message
 
     def __str__(self):
-        return "Request to {url} failed with code {code} and message: {message}".format(url=self.url, code=self.code,
-                                                                                        message=self.message)
+        return f"Request to {self.url} failed with code {self.code} and message: {self.message}"
 
 
 class NotEnoughSpace(WebDavException):
@@ -103,8 +105,8 @@ class NotEnoughSpace(WebDavException):
 
 
 class ResourceLocked(WebDavException):
-    def __init__(self, path):
+    def __init__(self, path: Union[str, Path]):
         self.path = path
 
     def __str__(self):
-        return "Resource {path} locked".format(path=self.path)
+        return f"Resource {self.path} locked"
