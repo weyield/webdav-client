@@ -571,7 +571,7 @@ class Client(object):
             self.upload_directory(local_path=local_path, remote_path=remote_path, progress=progress,
                                   progress_args=progress_args)
         else:
-            self.upload_file(local_path=local_path, remote_path=remote_path, progress_args=progress_args)
+            self.upload_file(local_path=local_path, remote_path=remote_path, progress=progress, progress_args=progress_args)
 
     def upload_directory(self, remote_path, local_path, progress: Optional[Callable[[int, int, ...], None]]=None, progress_args=()):
         """Uploads directory to remote path on WebDAV server.
@@ -898,7 +898,7 @@ class Client(object):
                     continue
                 self.upload_file(remote_path=remote_path, local_path=local_path)
                 updated = True
-            return updated
+        return updated
 
     def pull(self, remote_directory, local_directory):
         def prune(src, exp):
