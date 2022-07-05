@@ -48,8 +48,8 @@ class WebDAVSettings(ConnectionSettings):
         self.options = dict()
 
         for key in self.keys:
-            value = options.get(key, None)
-            if not (self.__dict__[key] is not None and value is None):
+            value = options.get(key, '')
+            if not (self.__dict__[key] and not value):
                 self.options[key] = value
                 self.__dict__[key] = value
 
