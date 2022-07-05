@@ -550,7 +550,7 @@ class Client(object):
 
         self.execute_request(action='upload', path=urn.quote(), data=buff)
 
-    def upload(self, remote_path, local_path, progress: Optional[Callable[[int, int, ...], None]]=None, progress_args=()):
+    def upload(self, remote_path, local_path, progress=None, progress_args=()):
         """Uploads resource to remote path on WebDAV server.
         In case resource is directory it will upload all nested files and directories.
         More information you can find by link http://webdav.org/specs/rfc4918.html#METHOD_PUT
@@ -571,7 +571,7 @@ class Client(object):
         else:
             self.upload_file(local_path=local_path, remote_path=remote_path, progress=progress, progress_args=progress_args)
 
-    def upload_directory(self, remote_path, local_path, progress: Optional[Callable[[int, int, ...], None]]=None, progress_args=()):
+    def upload_directory(self, remote_path, local_path, progress=None, progress_args=()):
         """Uploads directory to remote path on WebDAV server.
         In case directory is exist on remote server it will delete it and then upload directory with nested files and
         directories.
@@ -608,7 +608,7 @@ class Client(object):
                         progress_args=progress_args)
 
     @wrap_connection_error
-    def upload_file(self, remote_path: str, local_path: str, progress: Optional[Callable[[int, int, ...], None]]=None, progress_args=()):
+    def upload_file(self, remote_path: str, local_path: str, progress=None, progress_args=()):
         """Uploads file to remote path on WebDAV server. File should be 2Gb or less.
         More information you can find by link http://webdav.org/specs/rfc4918.html#METHOD_PUT
 
@@ -655,7 +655,7 @@ class Client(object):
             else:
                 self.execute_request(action='upload', path=urn.quote(), data=local_file)
 
-    def upload_sync(self, remote_path: str, local_path: str, callback=None, progress: Optional[Callable[[int, int, ...], None]]=None, progress_args=()):
+    def upload_sync(self, remote_path: str, local_path: str, callback=None, progress=None, progress_args=()):
         """Uploads resource to remote path on WebDAV server synchronously.
         In case resource is directory it will upload all nested files and directories.
 
@@ -675,7 +675,7 @@ class Client(object):
         if callback:
             callback()
 
-    def upload_async(self, remote_path: str, local_path: str, callback=None, progress: Optional[Callable[[int, int, ...], None]]=None, progress_args=()):
+    def upload_async(self, remote_path: str, local_path: str, callback=None, progress=None, progress_args=()):
         """Uploads resource to remote path on WebDAV server asynchronously.
         In case resource is directory it will upload all nested files and directories.
 
